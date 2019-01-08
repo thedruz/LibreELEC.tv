@@ -1,0 +1,29 @@
+From bc546bfcac486d0c0ed87a168519a31834ec2bbe Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Tue, 8 Jan 2019 06:50:04 +0000
+Subject: [PATCH] kernel 5.0: Remove 'type' argument from access_ok() function
+
+See: https://github.com/torvalds/linux/commit/96d4f267e40f9509e8a66e2b39e8b95655617693
+---
+ os_dep/rtw_android.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/os_dep/rtw_android.c b/os_dep/rtw_android.c
+index e3adb2e..243033b 100644
+--- a/os_dep/rtw_android.c
++++ b/os_dep/rtw_android.c
+@@ -384,7 +384,11 @@ int rtw_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
+ 		goto exit;
+ 	}
+ 
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 0, 0))
++	if (!access_ok(priv_cmd.buf, priv_cmd.total_len)){
++#else
+ 	if (!access_ok(VERIFY_READ, priv_cmd.buf, priv_cmd.total_len)){
++#endif
+ 		DBG_871X("%s: failed to access memory\n", __FUNCTION__);
+ 		ret = -EFAULT;
+ 		goto exit;
+-- 
+2.14.1
+
