@@ -15,6 +15,12 @@ PKG_IS_KERNEL_PKG="yes"
 PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
+  allwinner)
+    PKG_VERSION="5.0-rc8"
+    PKG_SHA256="7790c007efe1274da2b5183400e67093d90107310556a8de43c50bc62595a8c4"
+    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_PATCH_DIRS="allwinner"
+    ;;
   amlogic-3.14)
     PKG_VERSION="6d8fbb4ee61a7779ac57b5961e076f0c63ff8b65"
     PKG_SHA256="ef05c88779c893f92e92e5315d0e5396f34c32289726c301fae7ffe8c4214227"
